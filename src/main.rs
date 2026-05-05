@@ -6,8 +6,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let x = generate_list_of_random_values(sample_size);
     let y = generate_list_of_random_values(sample_size);
 
-    let root = BitMapBackend::new("plotters-doc-data/1.png", (640, 480)).into_drawing_area();
-    root.fill(&WHITE);
+    let root = BitMapBackend::new("plotters-doc-data/1.png", (640, 640)).into_drawing_area();
+    let _ = root.fill(&WHITE);
     let root = root.margin(10, 10, 10, 10);
 
     let mut chart = ChartBuilder::on(&root)
@@ -24,7 +24,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .draw()?;
 
     chart.draw_series(PointSeries::of_element(zip(x, y), 3, &RED, &|c, s, st| {
-        return EmptyElement::at(c) + Circle::new((0, 0), s, st.filled());
+        EmptyElement::at(c) + Circle::new((0, 0), s, st.filled())
     }))?;
 
     root.present()?;
