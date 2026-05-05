@@ -29,6 +29,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     root.present()?;
 
+    println!("{:?}", monte_carlo_pi(sample_size));
+
     Ok(())
 }
 
@@ -38,4 +40,18 @@ fn generate_random_float() -> f32 {
 
 fn generate_list_of_random_values(size: usize) -> Vec<f32> {
     (0..size).map(|_| generate_random_float()).collect()
+}
+
+fn monte_carlo_pi(num_samples: usize) -> f32 {
+    let x = generate_list_of_random_values(num_samples);
+    let y = generate_list_of_random_values(num_samples);
+
+    let mut points_inside_circle = 0;
+    for (xi, yi) in x.iter().zip(y.iter()) {
+        if xi * xi + yi * yi <= 1.0 {
+            points_inside_circle += 1;
+        }
+    }
+
+    4.0 * (points_inside_circle as f32) / (num_samples as f32)
 }
