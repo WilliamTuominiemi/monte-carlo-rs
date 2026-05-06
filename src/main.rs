@@ -1,5 +1,4 @@
 use plotters::prelude::*;
-use std::iter::zip;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let sample_size = 5000;
@@ -53,10 +52,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     root.present()?;
 
-    println!(
-        "{:?}",
-        monte_carlo_pi(sample_size, within_circle.iter().count())
-    );
+    let pi_estimate = monte_carlo_pi(sample_size, within_circle.iter().count());
+
+    println!("{:?} Δ:{:?}", pi_estimate, (3.141 - pi_estimate).abs());
 
     Ok(())
 }
